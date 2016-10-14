@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1>Logged in as {{user[0]['firstname']}} {{user[0]['lastname']}}</h1>
+	<a href="{{url_for('main.main_route', username = username)}}"
+				id="nav_home">
+	<botton>Back to Home</botton></a><br><br>
+	<a href="{{url_for('user.user_edit_route',username = username)}}" id="nav_edit">
+		Edit Account
+	</a><br><br>
+		
+	<a href="{{url_for('albums.albums_route')}}" id = "nav_albums">
+		My Albums
+	</a><br><br>
+
+	<a href="{{url_for('logout.logout_route')}}" id = "nav_logout">
+		Log Out
+	</a><br><br><br><br>
+
+	<h1>Edit Account</h1>
+	<br>
+	<form action="{{url_for('user.user_edit_route')}}" method="POST">
+		<label for="update_firstname_input">New Firstname: </label><input type="text" name="firstname" id="update_firstname_input">
+		<input type="hidden" name="username" value="{{user[0]['username']}}">
+		<input type="submit" name="submit" id="update_firstname_submit">
+	</form><br>
+		
+	<form action="{{url_for('user.user_edit_route')}}" method="POST">
+		<label for="update_lastname_input">New Lastname: </label><input type="text" name="lastname" id="update_lastname_input">
+		<input type="hidden" name="username" value="{{user[0]['username']}}">
+		<input type="submit" name="submit" id="update_lastname_submit">
+	</form><br>
+		
+	<form action="{{url_for('user.user_edit_route')}}" method="POST">
+		<label for="update_email_input">New Email: </label><input type="text" name="email" id="update_email_input">
+		<input type="hidden" name="username" value="{{user[0]['username']}}">
+		<input type="submit" name="submit" id="update_email_submit">
+	</form><br>
+		
+	<form action="{{url_for('user.user_edit_route')}}" method="POST">
+		<label for="update_password1_input">New Password 1: </label><input type="password" name="password1" id="update_password1_input"><br>
+		<label for="update_password2_input">New Password 2: </label><input type="password" name="password2" id="update_password2_input">
+		<input type="hidden" name="username" value="{{user[0]['username']}}">
+		<input type="submit" name="submit" id="update_password_submit">
+	</form><br>
+	{% if error %}
+		<p class="error">
+			Errors Appeared:
+		</p>
+	{% endif %}
+
+	{% if firstnameMaxLength %}
+		<p class="error">
+			Firstname must be no longer than 20 characters
+		</p>
+	{% endif %}
+
+	{% if lastnameMaxLength %}
+		<p class="error">
+			Lastname must be no longer than 20 characters
+		</p>
+	{% endif %}
+
+	{% if passwordMinLength %}
+		<p class="error">
+			Passwords must be at least 8 characters long
+		</p>
+	{% endif %}
+
+	
+
+	{% if password1Pattern1 %}
+		<p class="error">
+			Passwords may only contain letters, digits, and underscores
+		</p>
+	{% endif %}
+
+	{% if password1Pattern2 %}
+		<p class="error">
+			Passwords must contain at least one letter and one number
+		</p>
+	{% endif %}
+
+	{% if passwordMatch %}
+		<p class="error">
+			Passwords do not match
+		</p>
+	{% endif %}
+
+	{% if emailValid %}
+		<p class="error">
+			Email address must be valid
+		</p>
+	{% endif %}
+
+	{% if emailMaxLength %}
+		<p class="error">
+			Email must be no longer than 40 characters
+		</p>
+	{% endif %}
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<h1>Log In Page</h1>
+	<br>
+	<form action="{{url_for('login.login_route')}}" method="POST">
+		<label for="login_username_input">Username: </label><input type="text" name="username" id="login_username_input">
+		<label for="login_password_input">Password: </label><input type="password" name="password" id="login_password_input"><br>
+		<input type="submit" name="submit" id="login_submit">
+	</form>
+	{% if error %}
+		<p class="error">
+			Errors Appeared:
+		</p>
+	{% endif %}
+
+	{% if usernameBlank %}
+		<p class="error">
+			Username may not be left blank
+		</p>
+	{% endif %}
+
+	{% if passwordBlank %}
+		<p class="error">
+			Password may not be left blank
+		</p>
+	{% endif %}
+
+	{% if usernameDoesNotExist %}
+		<p class="error">
+			Username does not exist
+		</p>
+	{% endif %}
+
+	{% if passwordIncorrect %}
+		<p class="error">
+			Password is incorrect for the specified username
+		</p>
+	{% endif %}
+
+
+
+{% endblock %}

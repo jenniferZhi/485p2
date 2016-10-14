@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+	
+	<a href="{{url_for('main.main_route', username = username)}}"
+				id="nav_home">
+	<botton>Back to Home</botton></a><br><br>
+
+	<a href="{{url_for('user.user_edit_route',username = username)}}" id="nav_edit">
+		Edit Account
+	</a><br><br>
+		
+	<a href="{{url_for('albums.albums_route')}}" id = "nav_albums">
+		My Albums
+	</a><br><br>
+
+	<a href="{{url_for('logout.logout_route')}}" id = "nav_logout">
+		Log Out
+	</a><br><br><br><br>
+
+	<strong>
+		{{username}}
+	</strong>
+	<div>
+		<a href="{{url_for('albums.albums_edit_route')}}"
+		id="user_albums_edit_{{username}}">
+		<button>EDIT ALBUMS</button></a>
+	</div><br>
+
+	{% for item in Albums%}
+		<div>{{item.title}}
+			<a href="{{url_for('album.album_route', albumid = item.albumid)}}"  id="album_{{item.albumid}}_link">
+			<button>{{item.title}}</button>
+			</a>
+			<a href="{{url_for('album.album_edit_route', albumid = item.albumid)}}" id="album_edit_{{item.albumid}}_link">
+			<button>EDIT</button>
+			</a>
+
+			{% if edit %}
+				<form action="" method="POST">
+					<input type="hidden" name="albumid" value="{{item.albumid}}">
+					<input type="submit" name="op" value="delete" id="delete_album_{{item.albumid}}">
+
+				</form>
+			{% endif %}
+
+		</div><br>
+	{% endfor %}
+
+	{% for item in other_albums%}
+		<div>{{item.title}}
+			<a href="{{url_for('album.album_route', albumid = item.albumid)}}"  id="album_{{item.albumid}}_link">
+			<button>{{item.title}}</button>
+			</a>
+
+		</div><br>
+	{% endfor %}
+
+
+	{% if edit %}
+		<form action="" method="POST">
+			NEW ALBUM:
+			<input type="text" name="title" id="album_add_title">
+			<input type="hidden" name="username" value="{{username}}" id="album_add_username">
+			<input type="submit" name="op" value="add" id="album_add_submit">
+			
+		</form>	
+	{% endif %}
+{% endblock %}

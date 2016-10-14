@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1>Create New Account</h1>
+	<br>
+	<form action="{{url_for('user.user_route')}}" method="POST">
+		<label for="new_username_input">Username: </label><input type="text" name="username" id="new_username_input"><br>
+		<label for="new_firstname_input">Firstname: </label><input type="text" name="firstname" id="new_firstname_input"><br>
+		<label for="new_lastname_input">Lastname: </label><input type="text" name="lastname" id="new_lastname_input"><br>
+		<label for="new_email_input">Email: </label><input type="text" name="email" id="new_email_input"><br required>
+		<label for="new_password1_input">Password: </label><input type="password" name="password1" id="new_password1_input"><br>
+		<label for="new_password2_input">Retype Password: </label><input type="password" name="password2" id="new_password2_input"><br>
+		<input type="submit" name="submit" id="new_submit">
+	</form>
+	{% if error %}
+		<p class="error">
+			Errors Appeared:
+		</p>
+	{% endif %}
+
+	{% if usernameBlank %}
+		<p class="error">
+			Username may not be left blank
+		</p>
+	{% endif %}
+
+	{% if usernameMaxLength %}
+		<p class="error">
+			Username must be no longer than 20 characters
+		</p>
+	{% endif %}
+
+	{% if usernameMinLength %}
+		<p class="error">
+			Usernames must be at least 3 characters long
+		</p>
+	{% endif %}
+
+	{% if usernameUnique %}
+		<p class="error">
+			This username is taken
+		</p>
+	{% endif %}
+
+	{% if usernamePattern %}
+		<p class="error">
+			Usernames may only contain letters, digits, and underscores
+		</p>
+	{% endif %}
+
+	{% if firstnameBlank %}
+		<p class="error">
+			Firstname may not be left blank
+		</p>
+	{% endif %}
+
+	{% if firstnameMaxLength %}
+		<p class="error">
+			Firstname must be no longer than 20 characters
+		</p>
+	{% endif %}
+
+	{% if lastnameBlank %}
+		<p class="error">
+			Lastname may not be left blank
+		</p>
+	{% endif %}
+
+	{% if lastnameMaxLength %}
+		<p class="error">
+			Lastname must be no longer than 20 characters
+		</p>
+	{% endif %}
+
+	{% if password1Blank %}
+		<p class="error">
+			Password may not be left blank
+		</p>
+	{% endif %}
+
+	{% if password1MinLength %}
+		<p class="error">
+			Passwords must be at least 8 characters long
+		</p>
+	{% endif %}
+
+	
+
+	{% if password1Pattern1 %}
+		<p class="error">
+			Passwords may only contain letters, digits, and underscores
+		</p>
+	{% endif %}
+
+	{% if password1Pattern2 %}
+		<p class="error">
+			Passwords must contain at least one letter and one number
+		</p>
+	{% endif %}
+
+	{% if passwordMatch %}
+		<p class="error">
+			Passwords do not match
+		</p>
+	{% endif %}
+
+	{% if emailBlank %}
+		<p class="error">
+			Email may not be left blank
+		</p>
+	{% endif %}
+
+	{% if emailValid %}
+		<p class="error">
+			Email address must be valid
+		</p>
+	{% endif %}
+
+	{% if emailMaxLength %}
+		<p class="error">
+			Email must be no longer than 40 characters
+		</p>
+	{% endif %}
+
+
+
+
+
+
+
+{% endblock %}

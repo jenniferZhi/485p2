@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<a href="{{url_for('main.main_route', username = username)}}"
+				id="nav_home">
+	<botton>Back to Home</botton></a><br><br>
+
+	<a href="{{url_for('user.user_edit_route',username = username)}}" id="nav_edit">
+		Edit Account
+	</a><br><br>
+		
+	<a href="{{url_for('albums.albums_route')}}" id = "nav_albums">
+		My Albums
+	</a><br><br>
+
+	<a href="{{url_for('logout.logout_route')}}" id = "nav_logout">
+		Log Out
+	</a><br><br><br><br>
+
+
+	{% if flag %}
+	<h1>{{album_title}}, {{username}}</h1>
+		<div>
+			<a href="{{url_for('album.album_edit_route', albumid = albumid)}}" id="user_album_edit_{{albumid}}">
+				<button>EDIT ALBUM</button>
+			</a>
+		</div><br>
+	{% else %}
+	<h1>{{album_title}}, {{_username}}</h1>
+	{% endif %}
+
+	{% if edit %}
+
+	    <form action="" method="POST">
+			<input type="radio" name="access" value="public" id="album_edit_public_radio">Public<br />
+			<input type="radio" name="access" value="private" id="album_edit_private_radio">Private<br />
+			<input type="hidden" name="albumid" value="{{albumid}}">
+			<input type="submit" name="op" value="access" id="album_edit_access_submit">
+		</form>
+
+		<div><table>
+		     <tr><th>Username</th><th>Update Access</th></tr>
+	         {% for item in access %}
+	         <form action="" method="POST">
+	         <tr><td>{{item.username}}</td>
+	             <td><input type="submit" name="op" value="revoke" id="album_edit_revoke_{{item.username}}">
+	                 <input type = "hidden" name="albumid" value="{{albumid}}">
+	                 <input type="hidden" name="username" value="{{item.username}}">
+	                 </td>
+	                 </tr>
+	         </form>
+	        {% endfor %}
+
+	         <form action="" method="POST">
+	         <tr><td>New:
+	             <input type="text" name="username" id="album_edit_grant_input">
+	             <input type = "hidden" name="albumid" value="{{albumid}}">
+	             <input type="submit" name="op" value="grant" id="album_edit_grant_submit"></td></tr></form>
+	         </table>
+	    </div>
+	         
+
+	{% endif %}
+
+	{% for item in Photo %}
+		<div>{{item.picid}}
+			<a href="{{url_for('pic.pic_route', picid = item.picid)}}" id="pic_{{item.picid}}_link">
+			{% set filename = "images/" ~ item.picid ~  "." ~ item.format %}	
+			<img src = "{{url_for('static',filename = filename)}}">
+
+			</a>
+
+			{% if edit %}
+				<form action="" method="POST">
+					<input type="hidden" name="albumid" value="{{albumid}}">
+					<input type="hidden" name="picid" value="{{item.picid}}">
+					<input type="submit" name="op" value="delete" id="delete_pic_{{item.picid}}">
+				</form>
+			{% endif %}
+
+		</div><br>
+	{% endfor %}
+
+	{% if edit %}
+		<form action="" method="POST" enctype="multipart/form-data">
+			NEW PIC:
+			<input type="hidden" name="albumid" value="{{albumid}}">
+			<input type="file" name="file" id="file_input">
+			<input type="submit" name="op" value="add" id="file_submit">
+			
+		</form>>
+	{% endif %}
+{% endblock %}

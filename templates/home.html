@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1>Hello, Jennifer</h1>
+
+		<a href="{{url_for('login.login_route')}}" id="home_login">
+			Log In
+		</a><br>
+		<a href="{{url_for('user.user_route')}}" id="home_user_create">
+			Create New Account
+		</a><br><br><br>
+		
+
+		<strong>
+			Click On The Following Links To View All Public Albums
+		</strong><br>
+
+		{% for items in album%}
+		<br>
+		<a href="{{url_for('album.album_route', albumid=items['albumid'])}}" id="album_{{items.albumid}}_link">
+			<strong>
+				{{items['title']}}
+			</strong>		
+		</a>
+		{% endfor %}
+		<br><br><br>
+
+	
+
+		<strong>
+			Click On The Following Links To View Public/Shared Albums of Each User
+		</strong><br>
+		{% for items in user%}
+		<br>
+		<a href="{{url_for('albums.albums_route', username=items['username'])}}" id="user_albums_{{items['username']}}">		
+			<strong>
+				{{items['username']}}
+			</strong>		
+		</a>
+		{% endfor %}
+		<br><br><br>
+
+	<footer>EECS 485 PROJECT 1 CREATED BY GROUP 19</footer>
+{% endblock %}

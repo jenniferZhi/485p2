@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+	{% if flag_1 %}
+	{% endif %}
+	<h1>{{picid}}</h1>
+	<p id="pic_{{picid}}_caption">Caption: {{caption}}</p><br>
+
+	{% if flag_1 %}
+	<form action="" method="POST">
+	  <input type="text" name="caption" id="pic_caption_input">
+	  <input type="hidden" name="picid" value="{{picid}}">
+      <input type="submit" name="op" value="caption" id="pic_caption_submit">
+    </form>
+    {% endif %}
+
+	{% set filename = "images/" ~ picid ~ "." ~ format %}
+	
+	<img src = "{{url_for('static',filename = filename)}}"><br>
+
+	{% for items in Contain %}
+		{% if items['picid'] == picid %}
+			{% set count = loop.index0 %}
+
+			{% if not loop.first %}
+				<a href="{{url_for('pic.pic_route', picid = Contain[count-1]['picid'])}}" id="prev_pic">
+					<button>Previous PIC</button>
+				</a>
+			{% endif %}
+
+			{% if not loop.last %}
+				<a href="{{url_for('pic.pic_route', picid = Contain[count+1]['picid'])}}" id="next_pic">
+					<button>Next PIC</button>
+				</a>
+			{% endif %}
+			<a href="{{url_for('album.album_route', albumid= Contain[0]['albumid'])}}" id="parent_album">
+				<button>BACK</button>
+			</a>
+
+		{% endif %}
+	{% endfor %}
+{% endblock %}

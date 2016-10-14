@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1>Logged in as {{user[0]['firstname']}} {{user[0]['lastname']}}</h1>
+
+	<a href="{{url_for('main.main_route', username = user[0]['username'])}}"
+				id="nav_home">
+	<botton>Back to Home</botton></a><br><br>
+    
+    <a href="{{url_for('user.user_edit_route',username = user[0]['username'])}}" id="nav_edit">
+		Edit Account
+	</a><br>
+	<br>
+	<a href="{{url_for('albums.albums_route')}}" id = "nav_albums">
+		My Albums
+	</a><br>
+	<br>
+	<a href="{{url_for('logout.logout_route')}}" id = "nav_logout">
+		Log Out
+	</a><br>
+	<br><br><br>
+
+	<strong>
+		This is your own albums
+	</strong><br><br>
+	{% for item in Albums %}
+		<div>
+			<a href="{{url_for('album.album_route', albumid = item.albumid)}}"  id="album_{{item.albumid}}_link">
+			{{item.title}}
+			</a>
+		</div><br>
+	{% endfor %}
+	<br><br><br>
+
+
+
+
+	<strong>
+		This is the albums which you have been granted access to by the owner
+	</strong><br><br>
+	{% for item in other_albums %}
+		<div>
+			<a href="{{url_for('album.album_route', albumid = item.albumid)}}"  id="album_{{item.albumid}}_link">
+			{{item.title}}
+			</a>
+
+		</div><br>
+	{% endfor %}
+	<br>
+
+
+
+
+	<strong>
+		This is the public albums
+	</strong><br>
+	{% for items in AlbumPublic %}
+		<br>
+		<a href="{{url_for('album.album_route', albumid=items['albumid'])}}" id="album_{{items.albumid}}_link">
+				{{items['title']}}
+		</a><br>
+	{% endfor %}
+	<br><br><br>
+
+
+
+	
+{% endblock %}

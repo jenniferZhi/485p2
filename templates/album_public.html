@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{album_title}}, {{username}}</h1>
+
+	{% for item in Photo %}
+		 <strong>{{item.picid}}</strong>
+		 <a href="{{url_for('pic.pic_route', picid = item.picid)}}" id="pic_{{item.picid}}_link">
+			{% set filename = "images/" ~ item.picid ~  "." ~ item.format %}	
+			<img src = "{{url_for('static',filename = filename)}}">
+		 </a>
+	{% endfor %}
+
+{% endblock %}

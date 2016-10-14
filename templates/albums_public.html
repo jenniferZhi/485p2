@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<h1>All Public Albums Of {{username}}</h1>
+	    {% for item in Albums%}
+		<div>{{item.title}}
+			<a href="{{url_for('album.album_route', albumid = item.albumid,username = username)}}" id="album_{{item.albumid}}_link">
+			<button>{{item.title}}</button>
+			</a>
+		</div>
+		{% endfor %}
+{% endblock %}
